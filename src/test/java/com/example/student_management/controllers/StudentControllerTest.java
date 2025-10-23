@@ -41,12 +41,12 @@ class StudentControllerTest {
     void setUp() {
         Calendar cal1 = Calendar.getInstance();
         cal1.set(2000, Calendar.FEBRUARY, 15);
-        Student student1 = new Student("Dupont", "Jean", cal1.getTime());
+        Student student1 = new Student("Test", "Test", cal1.getTime());
         student1.setId(1);
 
         Calendar cal2 = Calendar.getInstance();
         cal2.set(2001, Calendar.JUNE, 20);
-        Student student2 = new Student("Martin", "Marie", cal2.getTime());
+        Student student2 = new Student("Test2", "Test2", cal2.getTime());
         student2.setId(2);
 
         studentList = Arrays.asList(student1, student2);
@@ -57,8 +57,8 @@ class StudentControllerTest {
     void testSaveStudent() throws Exception {
         Calendar cal = Calendar.getInstance();
         cal.set(2002, Calendar.APRIL, 10);
-        Student newStudent = new Student("Durand", "Pierre", cal.getTime());
-        Student savedStudent = new Student("Durand", "Pierre", cal.getTime());
+        Student newStudent = new Student("Test3", "Test3", cal.getTime());
+        Student savedStudent = new Student("Test3", "Test3", cal.getTime());
         savedStudent.setId(3);
 
         when(studentService.save(any(Student.class))).thenReturn(savedStudent);
@@ -68,8 +68,8 @@ class StudentControllerTest {
                         .content(objectMapper.writeValueAsString(newStudent)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(3))
-                .andExpect(jsonPath("$.nom").value("Durand"))
-                .andExpect(jsonPath("$.prenom").value("Pierre"));
+                .andExpect(jsonPath("$.nom").value("Test3"))
+                .andExpect(jsonPath("$.prenom").value("Test3"));
     }
 
 
@@ -99,11 +99,11 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].nom").value("Dupont"))
-                .andExpect(jsonPath("$[0].prenom").value("Jean"))
+                .andExpect(jsonPath("$[0].nom").value("Test"))
+                .andExpect(jsonPath("$[0].prenom").value("Test"))
                 .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].nom").value("Martin"))
-                .andExpect(jsonPath("$[1].prenom").value("Marie"));
+                .andExpect(jsonPath("$[1].nom").value("Test2"))
+                .andExpect(jsonPath("$[1].prenom").value("Test2"));
     }
 
 
